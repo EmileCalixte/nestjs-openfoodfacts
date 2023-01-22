@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  node:
+    image: node:18
+    working_dir: /home/node/app
+    restart: always
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./:/home/node/app
+    ports:
+      - 3000:3000
+    command: sh -c "npm install --verbose && npm run start:dev"
+
+  database:
+    image: mongo
+    restart: always
+    volumes:
+      - ./mongo/:/import-data
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+
+  mongoexpress:
+    image: mongo-express
+    restart: always
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: root
+      ME_CONFIG_MONGODB_URL: mongodb://root:root@database:27017/
+    depends_on:
+      - database
+    ports:
+      - 8080:8081
