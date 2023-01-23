@@ -11,7 +11,10 @@ async function bootstrap() {
     .setVersion('1.0')
     .build();
 
-  const apiDocumentationDocument = SwaggerModule.createDocument(app, apiDocumentationConfig);
+  const apiDocumentationDocument = SwaggerModule.createDocument(
+    app,
+    apiDocumentationConfig,
+  );
   SwaggerModule.setup('api', app, apiDocumentationDocument);
 
   await app.listen(3000);
