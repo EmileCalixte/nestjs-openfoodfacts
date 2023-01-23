@@ -2,6 +2,8 @@
 
 This is a technical test whose purpose is to query the [Open Food Facts database](https://fr.openfoodfacts.org/data).
 
+It should be possible to search for a product by code or by product name. The API documentation is automatically generated.
+
 ## Run project
 
 ### Start containers
