@@ -1,4 +1,6 @@
-# Nest OpenFoodFacts
+# NestJS OpenFoodFacts
+
+This is a technical test whose purpose is to query the [Open Food Facts database](https://fr.openfoodfacts.org/data).
 
 ## Run project
 
