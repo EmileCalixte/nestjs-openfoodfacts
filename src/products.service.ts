@@ -11,7 +11,9 @@ export class ProductsService {
     return await this.productModel.findOne({code});
   }
 
-  async findByProductName(productName: string, maxResultCount = 20): Promise<Product[]> {
-    return await this.productModel.find({product_name: new RegExp(productName)}).limit(maxResultCount);
+  async findByProductName(productName: string, page = 1, pageSize = 20): Promise<Product[]> {
+    const skip = (page - 1) * pageSize;
+
+    return await this.productModel.find({product_name: new RegExp(productName)}).skip(skip).limit(pageSize);
   }
 }

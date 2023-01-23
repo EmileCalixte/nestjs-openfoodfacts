@@ -6,14 +6,20 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Get('find')
-  async findByName(@Query() query: {name?: string}) {
+  async findByName(@Query() query: {name?: string, page?: string}) {
     if (!('name' in query)) {
       throw new HttpException('Bad Request', 400);
     }
 
     const productName = query.name;
 
-    return this.productsService.findByProductName(productName);
+    // We should verify that `page` param is a valid number and not a random string
+    // Here I want to keep the code as simple as possible, so I don't do this additional check
+    const page = 'page' in query ? parseInt(query.page) : 1;
+
+    // We could also add response headers to indicate the number of pages, total number of items...
+
+    return this.productsService.findByProductName(productName, page);
   }
 
   @Get(':code')
