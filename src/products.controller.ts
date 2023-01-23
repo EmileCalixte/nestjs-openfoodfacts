@@ -1,4 +1,5 @@
 import { Controller, Get, HttpException, Param, Query } from '@nestjs/common';
+import { ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { ProductsService } from './products.service';
 
 @Controller('products')
@@ -6,6 +7,10 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Get('find')
+  @ApiQuery({name: 'name'})
+  @ApiQuery({name: 'page', required: false})
+  @ApiResponse({status: 200, description: 'The list of found products'})
+  @ApiResponse({status: 400, description: 'Missing parameter(s)'})
   async findByName(@Query() query: {name?: string, page?: string}) {
     if (!('name' in query)) {
       throw new HttpException('Bad Request', 400);
@@ -23,6 +28,8 @@ export class ProductsController {
   }
 
   @Get(':code')
+  @ApiResponse({status: 200, description: 'The product corresponding to the code'})
+  @ApiResponse({status: 404, description: 'Product not found'})
   async getByCode(@Param('code') code: string) {
     const product = await this.productsService.findByCode(code);
 
