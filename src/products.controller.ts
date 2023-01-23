@@ -1,10 +1,13 @@
-import { Controller, Get, HttpException, Param, Query } from '@nestjs/common';
+import { CacheInterceptor, Controller, Get, HttpException, Param, Query, UseInterceptors } from '@nestjs/common';
 import { ApiQuery, ApiResponse } from '@nestjs/swagger';
 import { ProductsService } from './products.service';
 
 @Controller('products')
+@UseInterceptors(CacheInterceptor)
 export class ProductsController {
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(
+    private readonly productsService: ProductsService,
+  ) {}
 
   @Get('find')
   @ApiQuery({name: 'name'})
@@ -24,7 +27,7 @@ export class ProductsController {
 
     // We could also add response headers to indicate the number of pages, total number of items...
 
-    return this.productsService.findByProductName(productName, page);
+    return await this.productsService.findByProductName(productName, page);
   }
 
   @Get(':code')
