@@ -29,4 +29,5 @@ make importdb
 ### Access
 
 - API: [http://127.0.0.1:3000](http://127.0.0.1:3000)
+- API documentation: [http://127.0.0.1:3000/api](http://127.0.0.1:3000/api)
 - MongoExpress: [http://127.0.0.1:8080](http://127.0.0.1:8080)
