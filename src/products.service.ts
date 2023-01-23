@@ -10,4 +10,8 @@ export class ProductsService {
   async findByCode(code: string): Promise<Product | null> {
     return await this.productModel.findOne({code});
   }
+
+  async findByProductName(productName: string, maxResultCount = 20): Promise<Product[]> {
+    return await this.productModel.find({product_name: new RegExp(productName)}).limit(maxResultCount);
+  }
 }
